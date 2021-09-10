@@ -1,0 +1,223 @@
+Lesson in Class with 
+   necessary,single
+    name : String
+  necessary
+    subject : Subject
+end 
+
+Lesson in Class with 
+   necessary
+    phase : Phase
+end 
+
+Person in Class 
+end
+
+Phase in Class with 
+    necessary,single
+    	task: Task;
+	activated : Boolean
+    necessary
+    	professor : Professor;
+    	material : Material;
+    	description : String
+    attribute
+	children : Children
+    constraint
+	haveTask : $ forall p/Phase exists t/Task (p task t) $;
+	haveProf : $ forall p/Phase exists pr/Professor (p professor pr) $
+end 
+
+Professor in Class isA Person with 
+   necessary,single
+    name : String;
+    role : String
+end 
+
+Children in Class isA Person with 
+   necessary,single
+    name : String;
+    role : String
+end 
+
+Material in Class with 
+   necessary,single
+    name : String
+end 
+
+Subject in Class with 
+   necessary
+    achivment : String;
+    description : String
+end 
+
+Task in Class with
+    necessary,single
+    achivment : String;
+    complete : Boolean
+end
+
+Question in Class isA Phase  end 
+
+Example in Class isA Phase  end 
+
+EsperimentalPart in Class isA Phase  end 
+
+ReflectivePart in Class isA Phase  end 
+
+SelfReflection in Class isA Phase  end 
+
+Event in Class with 
+   necessary,single
+    lesson : Lesson;
+    responsibleProfessor : Professor
+   constraint
+	haveLesson : $ forall e/Event exists l/Lesson (e lesson l) $;
+	haveProf : $ forall e/Event exists pr/Professor (e responsibleProfessor pr) $
+end 
+
+TaskChangeEvent in Class isA Event with
+   necessary,single
+    referenceTask : Task
+   necessary
+    referenceFinishPhase : Phase;
+    referenceStartPhase : Phase
+   constraint
+	haveTask : $ forall e/TaskChangeEvent exists t/Task (e referenceTask t) $
+end
+------------------------------------------------------------------------------------------
+ECA RULES
+
+ECArule TaskLoadValueRule with
+    mode m:Deferred
+    ecarule myecarule : 
+        $ t/Task
+          ON Tell In(t,Task)
+          DO Tell A(t,complete,FALSE)
+        $    
+end
+
+ECArule StateQuestionToExample with 
+    mode m:Deferred
+    rejectMsg rm: "Qualcosa é andato storto"
+    ecarule myecarule : 
+	$ l/Lesson ts/Task pr/Professor q/Question e/Example ev/TaskChangeEvent
+          ON 	Tell In(ev,TaskChangeEvent)
+          IF 	A(ev,lesson,l) and A(ev,responsibleProfessor,pr) and A(ev,referenceTask,ts) and A(ev,referenceFinishPhase,Question)and A(ev,referenceStartPhase,Example) 
+		and A(l,phase,q) and A(q,professor,pr) and A(q,task,ts) and (ts complete FALSE) and A(l,phase,e) and (e activated FALSE)
+          DO 	Retell (q activated FALSE), Retell (ts complete TRUE), Retell (e activated TRUE)  
+        $ 
+end
+
+
+ECArule StateExampleToEsperimental with 
+    mode m:Deferred
+    rejectMsg rm: "Qualcosa é andato storto"
+    ecarule myecarule : 
+	$ l/Lesson ts/Task pr/Professor q/Example e/EsperimentalPart ev/TaskChangeEvent
+          ON 	Tell In(ev,TaskChangeEvent)
+          IF 	A(ev,lesson,l) and A(ev,responsibleProfessor,pr) and A(ev,referenceTask,ts) and A(ev,referenceFinishPhase,Question)and A(ev,referenceStartPhase,Example) 
+		and A(l,phase,q) and A(q,professor,pr) and A(q,task,ts) and (ts complete FALSE) and A(l,phase,e) and (e activated FALSE)
+          DO 	Retell (q activated FALSE), Retell (ts complete TRUE), Retell (e activated TRUE)  
+        $ 
+end
+  
+ECArule StateEsperimentalToReflective with 
+    mode m:Deferred
+    rejectMsg rm: "Qualcosa é andato storto"
+    ecarule myecarule : 
+	$ l/Lesson ts/Task pr/Professor q/EsperimentalPart e/ReflectivePart ev/TaskChangeEvent
+          ON 	Tell In(ev,TaskChangeEvent)
+          IF 	A(ev,lesson,l) and A(ev,responsibleProfessor,pr) and A(ev,referenceTask,ts) and A(ev,referenceFinishPhase,Question)and A(ev,referenceStartPhase,Example) 
+		and A(l,phase,q) and A(q,professor,pr) and A(q,task,ts) and (ts complete FALSE) and A(l,phase,e) and (e activated FALSE)
+          DO 	Retell (q activated FALSE), Retell (ts complete TRUE), Retell (e activated TRUE)  
+        $ 
+end
+
+ECArule StateReflectiveToExample with 
+    mode m:Deferred
+    rejectMsg rm: "Qualcosa é andato storto"
+    ecarule myecarule : 
+	$ l/Lesson ts/Task pr/Professor q/ReflectivePart e/Example ev/TaskChangeEvent
+          ON 	Tell In(ev,TaskChangeEvent)
+          IF 	A(ev,lesson,l) and A(ev,responsibleProfessor,pr) and A(ev,referenceTask,ts) and A(ev,referenceFinishPhase,Question)and A(ev,referenceStartPhase,Example) 
+		and A(l,phase,q) and A(q,professor,pr) and A(q,task,ts) and (ts complete FALSE) and A(l,phase,e) and (e activated FALSE)
+          DO 	Retell (q activated FALSE), Retell (ts complete TRUE), Retell (e activated TRUE)  
+        $ 
+end
+
+ECArule StateReflectiveToSelfReflection with 
+    mode m:Deferred
+    rejectMsg rm: "Qualcosa é andato storto"
+    ecarule myecarule : 
+	$ l/Lesson ts/Task pr/Professor q/ReflectivePart e/SelfReflection ev/TaskChangeEvent
+          ON 	Tell In(ev,TaskChangeEvent)
+          IF 	A(ev,lesson,l) and A(ev,responsibleProfessor,pr) and A(ev,referenceTask,ts) and A(ev,referenceFinishPhase,Question)and A(ev,referenceStartPhase,Example) 
+		and A(l,phase,q) and A(q,professor,pr) and A(q,task,ts) and (ts complete FALSE) and A(l,phase,e) and (e activated FALSE)
+          DO 	Retell (q activated FALSE), Retell (ts complete TRUE), Retell (e activated TRUE)  
+        $ 
+end
+--------------------------------------------------------------------
+
+INVALIDI 
+
+QuestionToExample in Class isA TaskChangeEvent with
+end 
+
+ExampleToEsperimentalPart in Class isA TaskChangeEvent with
+end 
+
+EsperimentalPartToReflectivePart in Class isA TaskChangeEvent with
+end 
+
+ReflectivePartToSelfReflection in Class isA TaskChangeEvent with
+end 
+
+ReflectivePartToExample in Class isA TaskChangeEvent with
+end 
+
+ReflectivePartToEsperimentalPart in Class isA TaskChangeEvent with
+end
+
+
+LessonType in Class end
+
+PhaseType in Class with 
+    attribute, single
+        parentLesson : LessonType;
+        parentTask : TaskType
+end
+
+TaskType in Class with 
+    attribute, necessary, single
+        complete : Boolean
+end
+
+TaskTypeRule in ECArule with
+    mode m:Deferred
+    ecarule myecarule : 
+        $ t/Taks
+          ON Tell In(t,Task)
+          DO Tell A(t isA TaskType)
+        $    
+end
+
+LessonTypeRule in ECArule with
+    mode m:Deferred
+    ecarule myecarule : 
+        $ l/Lesson
+          ON Tell In(l,Lesson)
+          DO Tell A(l isA LessonType)
+        $    
+end
+
+
+PhaseTypeRule in ECArule with
+    mode m:Deferred
+    ecarule myecarule : 
+        $ p/Phase
+          ON Tell In(p,Phase)
+          DO Tell A(p isA PhaseType)
+        $    
+end
+

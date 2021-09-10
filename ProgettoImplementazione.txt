@@ -1,0 +1,265 @@
+Lezione1 in Lesson with 
+    name 
+        nome : "Lezione su agenti inteligenti"
+    subject
+        abstract : ScopoLezione1
+    phase 
+	fase1 : Questione_Lezione1;
+	fase2 : Esempio_Lezione1;
+	fase3 : Esperienza1_Lezione1;
+	fase4 : Riflessione1_Lezione1;
+	fase5 : Autoriflessione_Lezione1
+end
+
+ScopoLezione1 in Subject with
+    achivment
+        obiettivo : "far capire hai bambini come funziona un agente inteligente"
+    description 
+        descrizione : "lezione su agenti inteligenti con introduzioni di automi "
+end
+
+Questione_Lezione1 in Question with 
+    task 
+        task  : TaskQuestione_Lezione1 
+    activated
+	attivazione : TRUE
+    professor
+        prof : Professore1
+    material
+        materiale : Materiale1Lezione1
+    description
+        descrizione : "Domanda hai bambini per farli riflettere"   
+end
+
+TaskQuestione_Lezione1 in Task with
+    achivment 
+        achivment : "i bambini devono aver compreso la domanda"
+    complete 
+        completato : FALSE
+end
+
+Esempio_Lezione1 in Example with 
+    task 
+        task  : TaskEsempio_Lezione1 
+    activated
+        attivazione : FALSE
+    professor
+        prof : Professore1
+    children 
+       child : Studente1
+    material
+        materiale : Materiale1Lezione1
+    description
+        descrizione : "facciamo vedere alla classe come si svolge l'attivita "   
+end
+
+TaskEsempio_Lezione1 in Task with
+    achivment 
+        achivment : "i bambini devono aver capito l'esempio"
+    complete 
+        completato : FALSE
+end
+
+Esperienza1_Lezione1 in EsperimentalPart with 
+    task 
+        task : TaskEsperienza1_Lezione1 
+    activated
+	attivazione : FALSE
+    professor
+        	prof1 : Professore1;
+	prof2 : Professore2
+    children 
+        	child1 : Studente1;
+	child2 : Studente2;
+	child3 : Studente3;
+	child4 : Studente4
+    material
+        materiale : Materiale1Lezione1
+    description
+        descrizione : "si fanno mettere gli studenti hanno coppie e gli si fa svolgere il compito"   
+end
+
+TaskEsperienza1_Lezione1 in Task with
+    achivment 
+        achivment : "almeno tutti gli studenti devono aver svolto l'esercizio "
+    complete 
+        completato : FALSE
+end
+
+Riflessione1_Lezione1 in ReflectivePart with 
+    task 
+        task : TaskRiflessione1_Lezione1
+    activated
+	attivazione : FALSE
+    professor
+        	prof1 : Professore1;
+	prof2 : Professore2
+    children 
+        	child1 : Studente1;
+	child2 : Studente2;
+	child3 : Studente3;
+	child4 : Studente4
+    material
+        materiale : Materiale1Lezione1
+    description
+        descrizione : "almento tutti gli studenti della fase di esperienziale devono riflettere su quanto fatto"   
+end
+
+TaskRiflessione1_Lezione1 in Task with
+    achivment 
+        achivment : "almeno tutti gli studenti devono pensare all'esercizio "
+    complete 
+        completato : FALSE
+end
+
+Autoriflessione_Lezione1 in SelfReflection with 
+    task 
+        task : TaskAutoriflessione_Lezione1
+    activated
+	attivazione : FALSE
+    professor
+        	prof1 : Professore1;
+	prof2 : Professore2
+    children 
+        	child1 : Studente1;
+	child2 : Studente2;
+	child3 : Studente3;
+	child4 : Studente4
+    material
+        materiale : Materiale1Lezione1
+    description
+        descrizione : "si cerca di far riflettere gli studenti"   
+end
+
+TaskAutoriflessione_Lezione1 in Task with
+    achivment 
+        achivment : "almeno tutti gli studenti devono pensare all'esercizio "
+    complete 
+        completato : FALSE
+end
+
+Professore1 in Professor with
+    name
+        nome : "Cristina Baroglio"
+    role
+        ruolo : "coordinatrice lezione" 
+end
+
+Professore2 in Professor with
+    name
+        nome : "Sara Capecchi"
+    role
+        ruolo : "seconda cordinatrice lezione" 
+end
+
+Studente1 in Children  with
+    name
+        nome : "Gabriele Naretto"
+    role
+        ruolo : "Studente che partecipa fa da esempio e partecipa alla parte esperienziale"
+end
+
+Studente2 in Children  with
+    name
+        nome : "Edoardo Petruzzo"
+    role
+        ruolo : "Studente che partecipa alla parte esprierienziale"
+end
+
+Studente3 in Children  with
+    name
+        nome : "Giorgio Mecca"
+    role
+        ruolo : "Studente che partecipa alla parte esprierienziale"
+end
+
+Studente4 in Children  with
+    name
+        nome : "Laura Ventrice"
+    role
+        ruolo : "Studente che partecipa alla parte esprierienziale"
+end
+
+Materiale1Lezione1 in Material with
+    name
+        nome : "Dizionario"
+end
+
+Materiale2Lezione1 in Material with
+    name
+        nome : "Banco Magico"
+end
+
+Materiale3Lezione1 in Material with
+    name
+        nome : "Foglietti per traduzione"
+end
+
+EventQuestioneLezione1 in TaskChangeEvent with 
+   lesson
+    lezioneDiRiferimento : Lezione1
+  responsibleProfessor
+    professoreResponsabile : Professore1
+  referenceTask
+    taskDiRiferimento : TaskQuestione_Lezione1
+  referenceFinishPhase
+    faseDiRiferimento1 : Questione_Lezione1
+  referenceStartPhase
+    faseiDiRiferimento2 : Esempio_Lezione1
+end 
+
+EventEsempio_Lezione1 in TaskChangeEvent with 
+   lesson
+    lezioneDiRiferimento : Lezione1
+  responsibleProfessor
+    professoreResponsabile : Professore1
+  referenceTask
+    taskDiRiferimento : TaskEsempio_Lezione1
+  referenceFinishPhase
+    faseDiRiferimento1 : Esempio_Lezione1
+  referenceStartPhase
+    faseiDiRiferimento2 : Esperienza1_Lezione1
+end 
+
+EventEsperienza1_Lezione1 in TaskChangeEvent with 
+   lesson
+    lezioneDiRiferimento : Lezione1
+  responsibleProfessor
+    professoreResponsabile : Professore1
+  referenceTask
+    taskDiRiferimento : TaskEsperienza1_Lezione1
+  referenceFinishPhase
+    faseDiRiferimento1 : Esperienza1_Lezione1
+  referenceStartPhase
+    faseiDiRiferimento2 : Riflessione1_Lezione1
+end
+
+EventRiflessione1_Lezione1 in TaskChangeEvent with 
+   lesson
+    lezioneDiRiferimento : Lezione1
+  responsibleProfessor
+    professoreResponsabile : Professore1
+  referenceTask
+    taskDiRiferimento : TaskRiflessione1_Lezione1
+  referenceFinishPhase
+    faseDiRiferimento1 : Riflessione1_Lezione1
+  referenceStartPhase
+    faseiDiRiferimento2 : Autoriflessione_Lezione1
+end
+
+-----------------------------------------------------------------------
+  
+EventRiflessione1_Lezione1 in TaskChangeEvent with 
+   lesson
+    lezioneDiRiferimento : Lezione1
+  responsibleProfessor
+    professoreResponsabile : Professore1
+  referenceTask
+    taskDiRiferimento : TaskRiflessione1_Lezione1
+  referenceFinishPhase
+    faseDiRiferimento1 : Riflessione1_Lezione1
+  referenceStartPhase
+    faseiDiRiferimento2 : Esempio_Lezione1
+end
+
+
