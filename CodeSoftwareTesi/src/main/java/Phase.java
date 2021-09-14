@@ -7,14 +7,16 @@ public abstract class Phase {
     private ArrayList<Materiale> materialList;
     private String descrizione;
     private ArrayList<Bambino> childList;
+    private String nomeFase;
 
-    public Phase(String descrizione,String descrizioneTask){
+    public Phase(String nome,String descrizione,String descrizioneTask){
         this.descrizione = descrizione;
         this.task = new Task(descrizioneTask);
         attiva = false;
         profList = new ArrayList<>();
         materialList = new ArrayList<>();
         childList = new ArrayList<>();
+        this.nomeFase = nome;
     }
 
     //metodo che ritorna la prossima fase
@@ -56,4 +58,28 @@ public abstract class Phase {
         return attiva;
     }
 
+    public void addProf(Professore a){
+        profList.add(a);
+    }
+
+    public void addChild(Bambino a){
+        childList.add(a);
+    }
+
+    public void addMaterial(Materiale a){
+        materialList.add(a);
+    }
+
+    @Override
+    public String toString() {
+        return "Phase{" +
+                "task=" + task +
+                ", attiva=" + attiva +
+                ", profList=" + profList +
+                ", materialList=" + materialList +
+                ", descrizione='" + descrizione + '\'' +
+                ", childList=" + childList +
+                ", nomeFase='" + nomeFase + '\'' +
+                '}';
+    }
 }

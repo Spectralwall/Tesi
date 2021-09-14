@@ -2,9 +2,12 @@ public class Questione extends Phase{
 
     private Phase nextPhase;
 
-    public Questione(String descrizione, String descrizioneTask,Phase next) {
-        super(descrizione, descrizioneTask);
-        this.nextPhase = next;
+    public Questione(String nome, String descrizione, String descrizioneTask) {
+        super(nome, descrizione, descrizioneTask);
+    }
+
+    public void setNextPhase(Phase nextPhase) {
+        this.nextPhase = nextPhase;
     }
 
     @Override

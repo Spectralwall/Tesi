@@ -2,6 +2,12 @@ public class Bambino {
     private String Nome;
     private String Ruolo;
 
+    public Bambino(String nome,String ruolo){
+        this.Nome = nome;
+        this.Ruolo = ruolo;
+    }
+
+
     public String getRuolo() {
         return Ruolo;
     }

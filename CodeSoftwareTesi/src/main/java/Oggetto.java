@@ -7,6 +7,14 @@ public class Oggetto {
         this.obiettivo = obiettivo;
     }
 
+    @Override
+    public String toString() {
+        return "Oggetto{" +
+                "descizione='" + descizione + '\'' +
+                ", obiettivo='" + obiettivo + '\'' +
+                '}';
+    }
+
     public String getDescizione() {
         return descizione;
     }

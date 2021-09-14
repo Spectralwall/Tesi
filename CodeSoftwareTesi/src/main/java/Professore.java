@@ -3,6 +3,12 @@ public class Professore {
     private String Cognome;
     private String Ruolo;
 
+    public Professore(String nome,String cognome,String ruolo){
+        this.Nome = nome;
+        this.Cognome = cognome;
+        this.Ruolo = ruolo;
+    }
+
     public String getRuolo() {
         return Ruolo;
     }

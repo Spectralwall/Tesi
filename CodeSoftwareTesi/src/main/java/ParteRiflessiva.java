@@ -1,9 +1,12 @@
 public class ParteRiflessiva extends Phase{
     private Phase nextPhase;
 
-    public ParteRiflessiva(String descrizione, String descrizioneTask,Phase next) {
-        super(descrizione, descrizioneTask);
-        this.nextPhase = next;
+    public ParteRiflessiva(String nome, String descrizione, String descrizioneTask) {
+        super(nome, descrizione, descrizioneTask);
+    }
+
+     public void setNextPhase(Phase nextPhase) {
+        this.nextPhase = nextPhase;
     }
 
     @Override
